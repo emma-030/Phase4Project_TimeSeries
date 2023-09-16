@@ -12,11 +12,11 @@ The main goal and objectives for this project are:
 ## 4.0 Findings from data analysis
 ### 4.1 Exploring cities & zipcodes in Harris County
 From data analysis we observed that Harris county has more than 100 zipcodes. We need to recommend the top five only. The image below shows the distribution of zipcodes with Harris County cities; with house prices within clients planned budget.
-![Cities_&_ZipCodes](Cities_Zipcodes_Budget.png)
+![Cities_Zipcodes_Budget](Cities_Zipcodes_Budget.png)
 
 ### 4.2 Historical prices & ROI in Harris County
 Below we capture the general price trends in Harris County for houses under client budget. This shows that the county's prices have been on upward trend that accelerated post 2012. Its important to note that despite the subprime mortgage & financial crisis of 2008, Harris county's prices saw a minimal drop.
-![Historical_Prices](ZipCode_Prices.png)
+![ZipCode_Prices](ZipCode_Prices.png)
 
 Additionally, the average return on investment between 2012 and 2018 is attractive for investment given more than average market returns.
 ![Historical_ROI](Historical_ROI.png)
@@ -26,14 +26,14 @@ Our choice model for the project is Seasonal Auto-Regressive Integrated Moving A
 
 ### 5.1 Model 1 - SARIMA Model for sample zipcode
 Given Harris county has more than 100 zipcodes, we created our first SARIMA model for 1 county (77080) to enable model performance observation, evaluation and fine tuning before deploying the model to all zipcodes.
-![Model1_zip77080](Zipcode_77080.png)
+![Zipcode_77080](Zipcode_77080.png)
 
 As per image above, the model almost perfectly captured the trend between 2012 and 2014. Between 2014 and 2018, our model is conservative resulting in lower forecast values as compared to the actual values.
 
 
 We calculated the model's Root Mean Squared Error (RMSE) which came to USD 22,273.39. Given the average price in this zipcode is 300,000 (hence a loss of ~7%), we felt comfortable with the model's performance hence decision to go ahead and forecast future prices for for this zip code.
 Zipcode 77080's 36 months' forecast:
-![Model1_zip77080_forecast](Zipcode_77080_forecast.png)
+![Zipcode_77080_forecast](Zipcode_77080_forecast.png)
 
 With our model's forecast not too far off from actual values, we decided to go ahead and forecast future prices for all zipcodes in Harris county, a duration of 3 years. See findings below
 
