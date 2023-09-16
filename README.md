@@ -1,72 +1,54 @@
 
-# Mod 4 Project - Starter Notebook
+# Top Zip Codes in Harris County for Real Estate Investment
+## 1.0 Overview
+A real estate investment company (client) is interested in investing in real estate in Harris County, Texas, USA. The client asked us to recommend the top five zip codes they can consider for investment. To enable us make this recommendation, we sourced a public dataset from Zillow that contains high volumes of historical house prices in the USA. We utilized Time Series analysis (SARIMA) to build a forecasting model to predict 3 years's worth of future house prices. With the predicted house prices, we calculated the expected return on investment (ROI) and recommended 5 zipcodes with the highest ROI.
 
-This notebook has been provided to you so that you can make use of the following starter code to help with the trickier parts of preprocessing the Zillow dataset. 
+## 2.0 Problem Statement
+Our client is a small-medium real estate enterprise that wants to invest in Harris County for the first time. Our client does not have first hand experience and historical information about the housing prices and their projections for growth in this county. Our client has asked us to perform analysis on publicly available housing data and make recommendations on the top five zip codes for a potential investment.The client is interested in properties with an average cost of  USD 200000 to USD 300000 as at April 2018.
+## 3.0 Project Objectives
+The main goal and objectives for this project are:
+1. Build a Time Series model that accurately forecasts future house prices
+2. Determine & recommend the top 5 Zip codes for potential investment based on projected return on investment (ROI)
+## 4.0 Findings from data analysis
+### 4.1 Exploring cities & zipcodes in Harris County
+From data analysis we observed that Harris county has more than 100 zipcodes. We need to recommend the top five only. The image below shows the distribution of zipcodes with Harris County cities; with house prices within clients planned budget.
+![Cities_&_ZipCodes]('Cities_Zipcodes_Budget.png')
 
-The notebook contains a rough outline the general order you'll likely want to take in this project. You'll notice that most of the areas are left blank. This is so that it's more obvious exactly when you should make use of the starter code provided for preprocessing. 
+### 4.2 Historical prices & ROI in Harris County
+Below we capture the general price trends in Harris County for houses under client budget. This shows that the county's prices have been on upward trend that accelerated post 2012. Its important to note that despite the subprime mortgage & financial crisis of 2008, Harris county's prices saw a minimal drop.
+![Historical_Prices]('ZipCode_Prices.png')
 
-**_NOTE:_** The number of empty cells are not meant to infer how much or how little code should be involved in any given step--we've just provided a few for your convenience. Add, delete, and change things around in this notebook as needed!
+Additionally, the average return on investment between 2012 and 2018 is attractive for investment given more than average market returns.
+![Historical_ROI]('Historical_ROI.png')
 
-# Some Notes Before Starting
+### 5.0 Time Series Modelling
+Our choice model for the project is Seasonal Auto-Regressive Integrated Moving Average (SARIMA). The decision was informed by studying the dataset and observing presence of regular intervals & patterns hence its ability to capture seasonal trends and analyze (& predict) long term market trends, hence suitability for time series analysis. Presence of seasonality further directed the decision to SARIMA.
 
-This project will be one of the more challenging projects you complete in this program. This is because working with Time Series data is a bit different than working with regular datasets. In order to make this a bit less frustrating and help you understand what you need to do (and when you need to do it), we'll quickly review the dataset formats that you'll encounter in this project. 
+### 5.1 Model 1 - SARIMA Model for sample zipcode
+Given Harris county has more than 100 zipcodes, we created our first SARIMA model for 1 county (77080) to enable model performance observation, evaluation and fine tuning before deploying the model to all zipcodes.
+![Model1_zip77080]('Zipcode_77080.png')
 
-## Wide Format vs Long Format
-
-If you take a look at the format of the data in `zillow_data.csv`, you'll notice that the actual Time Series values are stored as separate columns. Here's a sample: 
-
-<img src='../images/df_head.png'>
-
-You'll notice that the first seven columns look like any other dataset you're used to working with. However, column 8 refers to the median housing sales values for April 1996, column 9 for May 1996, and so on. This This is called **_Wide Format_**, and it makes the dataframe intuitive and easy to read. However, there are problems with this format when it comes to actually learning from the data, because the data only makes sense if you know the name of the column that the data can be found it. Since column names are metadata, our algorithms will miss out on what dates each value is for. This means that before we pass this data to our ARIMA model, we'll need to reshape our dataset to **_Long Format_**. Reshaped into long format, the dataframe above would now look like:
-
-<img src='../images/melted1.png'>
-
-There are now many more rows in this dataset--one for each unique time and zipcode combination in the data! Once our dataset is in this format, we'll be able to train an ARIMA model on it. The method used to convert from Wide to Long is `pd.melt()`, and it is common to refer to our dataset as 'melted' after the transition to denote that it is in long format. 
-
-# Helper Functions Provided
-
-Melting a dataset can be tricky if you've never done it before, so you'll see that we have provided a sample function, `melt_data()`, to help you with this step below. Also provided is:
-
-* `get_datetimes()`, a function to deal with converting the column values for datetimes as a pandas series of datetime objects
-* Some good parameters for matplotlib to help make your visualizations more readable. 
-
-Good luck!
+As per image above, the model almost perfectly captured the trend between 2012 and 2014. Between 2014 and 2018, our model is conservative resulting in lower forecast values as compared to the actual values.
 
 
-# Step 1: Load the Data/Filtering for Chosen Zipcodes
+We calculated the model's Root Mean Squared Error (RMSE) which came to USD 22,273.39. Given the average price in this zipcode is 300,000 (hence a loss of ~7%), we felt comfortable with the model's performance hence decision to go ahead and forecast future prices for for this zip code.
+Zipcode 77080's 36 months' forecast:
+![Model1_zip77080_forecast]('Zipcode_77080_forecast.png')
 
-# Step 2: Data Preprocessing
+With our model's forecast not too far off from actual values, we decided to go ahead and forecast future prices for all zipcodes in Harris county, a duration of 3 years. See findings below
 
+### 5.2 Final Model - SARIMA Model for all Zip codes in Harris County that are within the USD 200,000 to 300,000 client budget
+Using the workflow established in Model 1, we forecasted a period of 36 months for all zipcodes in Harris county. 
+Additionally, we calculated the ROI on the forecasted future price at end of April 2021. We sorted the future ROIs and plotted the top five zip codes per below:
+![Top5_zipcodes]('Top5_zipcodes.png')
 
-```python
-def get_datetimes(df):
-    return pd.to_datetime(df.columns.values[1:], format='%Y-%m')
-```
+Our final model forecasted house prices for the future period between 2018 & 2021. Per image above, we see the predicted top 5 zip codes interms of highest ROI; i.e., zipcodes: 77092, 77003, 77062, 77586 and 77345 whose ROI in the next 3 years will be between 23% & 33%.
+## 6.0 Recommendations & Conclusions
 
-# Step 3: EDA and Visualization
-
-
-```python
-font = {'family' : 'normal',
-        'weight' : 'bold',
-        'size'   : 22}
-
-matplotlib.rc('font', **font)
-
-# NOTE: if you visualizations are too cluttered to read, try calling 'plt.gcf().autofmt_xdate()'!
-```
-
-# Step 4: Reshape from Wide to Long Format
-
-
-```python
-def melt_data(df):
-    melted = pd.melt(df, id_vars=['RegionName', 'City', 'State', 'Metro', 'CountyName'], var_name='time')
-    melted['time'] = pd.to_datetime(melted['time'], infer_datetime_format=True)
-    melted = melted.dropna(subset=['value'])
-    return melted.groupby('time').aggregate({'value':'mean'})
-```
-
-# Step 5: ARIMA Modeling
-
-# Step 6: Interpreting Results
+We recommend that our client invests in the top five zip codes listed below:
+Zip Code Predictions:
+1. Zip Code 77092: 33.09%
+2. Zip Code 77003: 30.54%
+3. Zip Code 77062: 23.13%
+4. Zip Code 77586: 22.86%
+5. Zip Code 77345: 21.81%
