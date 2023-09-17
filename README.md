@@ -11,7 +11,7 @@ The main goal and objectives for this project are:
 2. Determine & recommend the top 5 Zip codes for potential investment based on projected return on investment (ROI)
 ## 4.0 Findings from data analysis
 ### 4.1 Exploring cities & zipcodes in Harris County
-From data analysis we observed that Harris county has more than 100 zipcodes. We need to recommend the top five only. The image below shows the distribution of zipcodes with Harris County cities; with house prices within clients planned budget.
+From analysis we observed that Harris county has more than 100 zipcodes. We need to recommend the top five only. The image below shows the distribution of 24 zipcodes within Harris County cities; whose house prices within clients planned budget.
 ![Cities_Zipcodes_Budget](Cities_Zipcodes_Budget.png)
 
 ### 4.2 Historical prices & ROI in Harris County
@@ -35,11 +35,11 @@ We calculated the model's Root Mean Squared Error (RMSE) which came to USD 22,27
 Zipcode 77080's 36 months' forecast:
 ![Zipcode_77080_forecast](Zipcode_77080_forecast.png)
 
-With our model's forecast not too far off from actual values, we decided to go ahead and forecast future prices for all zipcodes in Harris county, a duration of 3 years. See findings below
+With our model's forecast not too far off from actual values, we decided to go ahead and forecast future prices for all zipcodes in Harris county, for a duration of 36 months. See findings below.
 
 ### 5.2 Final Model - SARIMA Model for all Zip codes in Harris County that are within the USD 200,000 to 300,000 client budget
-Using the workflow established in Model 1, we forecasted a period of 36 months for all zipcodes in Harris county. 
-Additionally, we calculated the ROI on the forecasted future price at end of April 2021. We sorted the future ROIs and plotted the top five zip codes per below:
+Using the workflow established in Model 1, we forecasted a period of 36 months for all the 24 zipcodes within budget scope. 
+Then, we calculated the ROI on the forecasted future price at end of April 2021. We sorted the future ROIs and plotted the top five zip codes per below:
 ![Top5_zipcodes](Top5_zipcodes.png)
 
 Our final model forecasted house prices for the future period between 2018 & 2021. Per image above, we see the predicted top 5 zip codes interms of highest ROI; i.e., zipcodes: 77092, 77003, 77062, 77586 and 77345 whose ROI in the next 3 years will be between 23% & 33%.
